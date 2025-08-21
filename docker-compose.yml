@@ -1,0 +1,38 @@
+volumes:
+  shared_downloads:
+
+services:
+  saveanybot:
+    image: ghcr.io/krau/saveany-bot:latest
+    container_name: saveanybot
+    restart: unless-stopped
+    volumes:
+      # 改回映射 config.toml
+      - ./saveanybot_data/config.toml:/app/config.toml
+      - ./saveanybot_data/data.db:/app/data.db
+      - ./saveanybot_data/session.db:/app/session.db
+      - shared_downloads:/downloads 
+    environment:
+      - TZ=Asia/Shanghai
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  notion_uploader:
+    build:
+      context: ./notion_uploader_data
+    container_name: notion_uploader
+    restart: unless-stopped
+    env_file:
+      - ./notion_uploader_data/.env
+    volumes:
+      - shared_downloads:/downloads
+    environment:
+      - TZ=Asia/Shanghai
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"

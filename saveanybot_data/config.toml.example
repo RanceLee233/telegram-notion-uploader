@@ -1,0 +1,31 @@
+# 并发
+workers  = 4
+retry    = 3
+threads  = 4
+stream   = false
+
+# Telegram
+[telegram]
+token   = "YOUR_TELEGRAM_BOT_TOKEN"  # 从 @BotFather 获取你的机器人令牌
+timeout = 60
+
+# 本地存储
+[[storages]]
+name       = "VPS_Downloads"
+type       = "local"
+enable     = true
+base_path  = "/downloads"
+
+# —— 目录层级 ——  
+# 有 media_group_id 则用它，否则用 chatId_messageId
+subdir_template   = "{{if media_group_id}}{{media_group_id}}{{else}}{{chat_id}}_{{message_id}}{{end}}"
+
+# —— 文件名 ——  
+# 用序号+原扩展名，保证同文件夹内自增
+filename_template = "{{index}}{{ext}}"
+
+# 用户权限
+[[users]]
+id        = YOUR_TELEGRAM_USER_ID  # 替换为你的 Telegram 用户 ID
+blacklist = true
+storages  = []
