@@ -22,7 +22,23 @@ The project consists of two core services:
 Telegram → SaveAny Bot → /downloads (shared volume) → Notion Uploader → Notion Database
 ```
 
-## 🚀 Quick Start
+## 🚀 Deployment Options
+
+This project offers two deployment methods - choose based on your needs:
+
+### 🐳 Docker Deployment (Recommended)
+**For**: Users familiar with Docker  
+**Pros**: Environment isolation, simple deployment, good stability
+
+### 💻 Local Deployment
+**For**: Users who prefer not to use Docker  
+**Pros**: Easier debugging, direct control, lower resource usage
+
+📖 **Complete Tutorial**: [Local Deployment Guide](local_deployment/README_LOCAL.md)
+
+---
+
+## 🚀 Docker Quick Start
 
 ### Prerequisites
 
@@ -80,6 +96,84 @@ Send the following commands to your Bot in Telegram:
 
 > ⚠️ **Important**: Please refer to the [SaveAny Bot official documentation](https://github.com/krau/SaveAny-Bot) for complete configuration options and rule settings. This project's core download functionality relies entirely on the excellent implementation of SaveAny Bot.
 
+---
+
+## 📚 Complete Beginner Tutorial
+
+### 🔰 First Time Users Start Here
+
+If you're new to Telegram Bots or Notion API, follow this detailed tutorial:
+
+#### Step 1: Create Telegram Bot (Visual Guide)
+
+1. **Open Telegram**
+   - Open Telegram app on your phone or computer
+   - Register an account if you don't have one
+
+2. **Find BotFather**
+   - Search for `@BotFather` in the search box
+   - Click the first result (with blue verification checkmark)
+
+3. **Create New Bot**
+   - Send `/newbot` command
+   - BotFather will ask for bot name, e.g., `My Notion Uploader Bot`
+   - Then ask for username (must end with bot), e.g., `my_notion_uploader_bot`
+   - On success, BotFather sends a message with the Token
+
+4. **Save Token**
+   ```
+   Example: 1234567890:ABCdefGhIjKlMnOpQrStUvWxYz
+   ```
+   ⚠️ **Important**: Save this Token securely, you'll need it later
+
+#### Step 2: Setup Notion (Visual Guide)
+
+1. **Create Notion Account**
+   - Visit [notion.so](https://notion.so) to register
+   - Login if you already have an account
+
+2. **Create Database**
+   - Create a new page in Notion
+   - Add a database (select "Table")
+   - Set database properties:
+     - **Name** (Title type) - for page titles
+     - **Files & Media** (Files type) - for media files
+
+3. **Create Integration**
+   - Visit [https://www.notion.so/my-integrations](https://www.notion.so/my-integrations)
+   - Click "+ New integration"
+   - Fill in details:
+     - **Name**: Telegram Uploader
+     - **Associated workspace**: Select your workspace
+     - **Type**: Internal integration
+   - Click "Submit"
+   - Copy the generated **Internal Integration Token**
+
+4. **Add Database Permissions**
+   - Open your created database page
+   - Click the "..." menu in top right
+   - Select "Add connections"
+   - Find and select your Integration
+
+5. **Get Database ID**
+   ```
+   Database URL: https://notion.so/username/1234567890abcdef1234567890abcdef?v=...
+   Database ID: 1234567890abcdef1234567890abcdef (32-character string)
+   ```
+
+#### Step 3: Get Telegram User ID
+
+**Method 1: Using @userinfobot (Recommended)**
+1. Search for `@userinfobot` in Telegram
+2. Click "Start" or send `/start`
+3. Bot returns your user info, note the User ID
+
+**Method 2: Using @RawDataBot**
+1. Search for `@RawDataBot` in Telegram
+2. Send any message
+3. Bot returns detailed info, find the `"id"` field
+
+
 ## 📋 Detailed Configuration
 
 ### Notion Integration Setup
@@ -92,8 +186,8 @@ Send the following commands to your Bot in Telegram:
 ### Database Properties Requirements
 
 Your Notion database needs the following properties:
-- **名称** (Title type): Page title
-- **文件和媒体** (Files type): Store media files
+- **Name** (Title type): Page title
+- **Files & Media** (Files type): Store media files
 
 ### File Processing Rules
 
@@ -167,6 +261,13 @@ docker compose logs -f
 docker compose logs saveanybot | grep -i error
 docker compose logs notion_uploader | grep -i error
 ```
+
+### Detailed Guides
+
+For comprehensive troubleshooting and setup guides:
+- 📖 [Complete FAQ](FAQ.md) - 35+ common questions answered
+- 🔧 [Troubleshooting Guide](TROUBLESHOOTING.md) - Detailed problem diagnosis
+- 💻 [Local Deployment Tutorial](local_deployment/README_LOCAL.md) - Non-Docker setup guide
 
 ## 🤝 Contributing
 

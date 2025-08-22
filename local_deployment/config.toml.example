@@ -1,0 +1,35 @@
+# SaveAny Bot 本地部署配置文件
+# 复制为 config.toml 并填入你的真实信息
+
+# 并发设置
+workers  = 4
+retry    = 3
+threads  = 4
+stream   = false
+
+# Telegram 配置
+[telegram]
+token   = "YOUR_TELEGRAM_BOT_TOKEN"  # 从 @BotFather 获取的机器人令牌
+timeout = 60
+
+# 本地存储配置
+[[storages]]
+name       = "Local_Downloads"        # 存储名称
+type       = "local"                  # 存储类型：本地
+enable     = true                     # 启用此存储
+base_path  = "./downloads"            # 本地下载目录（相对于SaveAny Bot可执行文件）
+
+# 目录层级模板
+# 如果是相册（多文件），使用 media_group_id
+# 如果是单文件，使用 chat_id_message_id 格式
+subdir_template   = "{{if media_group_id}}{{media_group_id}}{{else}}{{chat_id}}_{{message_id}}{{end}}"
+
+# 文件名模板
+# 使用序号+原始扩展名，确保同文件夹内文件名唯一
+filename_template = "{{index}}{{ext}}"
+
+# 用户权限配置
+[[users]]
+id        = YOUR_TELEGRAM_USER_ID     # 替换为你的 Telegram 用户 ID
+blacklist = false                     # false = 允许此用户使用
+storages  = ["Local_Downloads"]       # 此用户可以使用的存储
